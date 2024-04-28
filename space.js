@@ -1,3 +1,5 @@
+let title = document.querySelector("h1");
+
 //board
 let tileSize = 32;
 let rows = 16;
@@ -74,6 +76,7 @@ function update() {
     requestAnimationFrame(update);
 
     if (gameOver) {
+        window.location.reload();
         return;
     }
 
