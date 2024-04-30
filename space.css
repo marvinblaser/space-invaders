@@ -73,6 +73,16 @@ body {
     
 }
 
-.left{
-    
+.controllers{
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    margin: 50px 0 0 0;
+}
+
+.arrow{
+    padding: 15px;
+    background-color: #d8d8d8;
+    border-radius: 50%;
+    border: 2px solid #626262;
 }

@@ -7,7 +7,10 @@ startButton.addEventListener("click", ()=>{
     start.remove();
     blurPage.remove();
     starting();
-  });
+});
+
+let leftArrow = document.querySelector(".left");
+let rightArrow = document.querySelector(".right");
 
 //board
 let tileSize = 24;
@@ -165,12 +168,23 @@ function moveShip(e) {
         return;
     }
 
-    if (e.code == "ArrowLeft" && ship.x - shipVelocityX >= 0) {
-        ship.x -= shipVelocityX; //move left one tile
-    }
-    else if (e.code == "ArrowRight" && ship.x + shipVelocityX + ship.width <= board.width) {
-        ship.x += shipVelocityX; //move right one tile
-    }
+    leftArrow.addEventListener("click", function(event){
+        if (ship.x - shipVelocityX >= 0){
+            ship.x -= shipVelocityX;
+        }
+    })
+    rightArrow.addEventListener("click", function(event){
+        if(ship.x + shipVelocityX + ship.width <= board.width) {
+            ship.x += shipVelocityX; //move right one tile
+        }
+    })
+
+    // if (e.code == "ArrowLeft" && ship.x - shipVelocityX >= 0) {
+    //     ship.x -= shipVelocityX; //move left one tile
+    // }
+    // else if (e.code == "ArrowRight" && ship.x + shipVelocityX + ship.width <= board.width) {
+    //     ship.x += shipVelocityX; //move right one tile
+    // }
 }
 
 function createAliens() {
