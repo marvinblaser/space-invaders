@@ -1,7 +1,16 @@
 let title = document.querySelector("h1");
 
+let start = document.querySelector(".start");
+let startButton = document.querySelector(".start-button");
+let blurPage = document.querySelector(".blur");
+startButton.addEventListener("click", ()=>{
+    start.remove();
+    blurPage.remove();
+    starting();
+  });
+
 //board
-let tileSize = 32;
+let tileSize = 24;
 let rows = 16;
 let columns = 16;
 
@@ -46,17 +55,12 @@ let bulletVelocityY = -10; //bullet moving speed
 let score = 0;
 let gameOver = false;
 
-window.onload = function() {
-    board = document.getElementById("board");
+function starting() {
+    board = document.querySelector("#board");
     board.width = boardWidth;
     board.height = boardHeight;
-    context = board.getContext("2d"); //used for drawing on the board
+    context = board.getContext("2d");
 
-    //draw initial ship
-    // context.fillStyle="green";
-    // context.fillRect(ship.x, ship.y, ship.width, ship.height);
-
-    //load images
     shipImg = new Image();
     shipImg.src = "./ship.png";
     shipImg.onload = function() {
@@ -76,7 +80,7 @@ function update() {
     requestAnimationFrame(update);
 
     if (gameOver) {
-        window.location.reload();
+        document.querySelector(".loose").style.display = "flex";
         return;
     }
 
