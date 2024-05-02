@@ -1,7 +1,9 @@
 let title = document.querySelector("h1");
 
 let start = document.querySelector(".start");
+let win = document.querySelector(".win")
 let startButton = document.querySelector(".start-button");
+let shootButton = document.querySelector(".shoot");
 let blurPage = document.querySelector(".blur");
 startButton.addEventListener("click", ()=>{
     start.remove();
@@ -65,18 +67,20 @@ function starting() {
     context = board.getContext("2d");
 
     shipImg = new Image();
-    shipImg.src = "./ship.png";
+    shipImg.src = "./toothpaste.png";
     shipImg.onload = function() {
         context.drawImage(shipImg, ship.x, ship.y, ship.width, ship.height);
     }
 
     alienImg = new Image();
-    alienImg.src = "./alien.png";
+    alienImg.src = "./tooth.png";
     createAliens();
 
     requestAnimationFrame(update);
-    document.addEventListener("keydown", moveShip);
-    document.addEventListener("keyup", shoot);
+    shootButton.addEventListener("click", shoot);
+
+    leftArrow.addEventListener("click", () => moveShip("ArrowLeft"));
+    rightArrow.addEventListener("click", () => moveShip("ArrowRight"));
 }
 
 function update() {
@@ -84,6 +88,11 @@ function update() {
 
     if (gameOver) {
         document.querySelector(".loose").style.display = "flex";
+        return;
+    }
+
+    if (score >= 15000){
+        end();
         return;
     }
 
@@ -163,28 +172,18 @@ function update() {
     context.fillText(score, 5, 20);
 }
 
-function moveShip(e) {
+function moveShip(direction) {
     if (gameOver) {
+        document.querySelector(".loose").style.display = "flex";
         return;
     }
 
-    leftArrow.addEventListener("click", function(event){
-        if (ship.x - shipVelocityX >= 0){
-            ship.x -= shipVelocityX;
-        }
-    })
-    rightArrow.addEventListener("click", function(event){
-        if(ship.x + shipVelocityX + ship.width <= board.width) {
-            ship.x += shipVelocityX; //move right one tile
-        }
-    })
-
-    // if (e.code == "ArrowLeft" && ship.x - shipVelocityX >= 0) {
-    //     ship.x -= shipVelocityX; //move left one tile
-    // }
-    // else if (e.code == "ArrowRight" && ship.x + shipVelocityX + ship.width <= board.width) {
-    //     ship.x += shipVelocityX; //move right one tile
-    // }
+    if (direction === "ArrowLeft" && ship.x - shipVelocityX >= 0) {
+        ship.x -= shipVelocityX; //move left one tile
+    }
+    else if (direction === "ArrowRight" && ship.x + shipVelocityX + ship.width <= board.width) {
+        ship.x += shipVelocityX; //move right one tile
+    }
 }
 
 function createAliens() {
@@ -206,11 +205,10 @@ function createAliens() {
 
 function shoot(e) {
     if (gameOver) {
+        document.querySelector(".loose").style.display = "flex";
         return;
     }
 
-    if (e.code == "Space") {
-        //shoot
         let bullet = {
             x : ship.x + shipWidth*15/32,
             y : ship.y,
@@ -219,7 +217,6 @@ function shoot(e) {
             used : false
         }
         bulletArray.push(bullet);
-    }
 }
 
 function detectCollision(a, b) {
@@ -228,3 +225,17 @@ function detectCollision(a, b) {
            a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
            a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
 }
+
+function end(){
+    board.remove();
+    win.style.display = "flex"
+}
+
+let help = document.querySelector(".help");
+document.querySelector(".back").addEventListener("click", ()=>{
+    document.querySelector(".skip").style.display = "none";
+  })
+  
+  help.addEventListener("click", ()=>{
+    document.querySelector(".skip").style.display = "flex";
+  })
