@@ -67,13 +67,13 @@ function starting() {
     context = board.getContext("2d");
 
     shipImg = new Image();
-    shipImg.src = "./toothpaste.png";
+    shipImg.src = "stock/img/toothpaste.png";
     shipImg.onload = function() {
         context.drawImage(shipImg, ship.x, ship.y, ship.width, ship.height);
     }
 
     alienImg = new Image();
-    alienImg.src = "./tooth.png";
+    alienImg.src = "stock/img/tooth.png";
     createAliens();
 
     requestAnimationFrame(update);
